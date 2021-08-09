@@ -1,2 +1,2 @@
-Mishina Marina 
+Mishina Marina
 m.a.mishina@tinkioff.ru
