@@ -86,6 +86,7 @@ and
 
 <details>
 <summary>вебинар 02 от 06.08.2021</summary>
+</details>
 
 ### Java platform overview
 - [ ] Java Platform definition
@@ -105,6 +106,32 @@ Practice quest
 - [ ] Исходники двух классов
 ```
 import com.tinkoff.edu.Printer;
+
+public class MyApplication {
+	public static void main(String[] args) {
+		Printer.print("Hewllo world!");
+	}
+} 
+
+---
+  
+package com.tinkoff.edu;
+
+public class Printer {
+	public static void print(String message) {
+		System.out.println(message);
+	}
+}
+```
+### When
+- [ ] Папочная структура исходников src/MyApplication.java
+- [ ] Компиляция: два .class
+- [x] Разделить иcходники и бинарники: `src` и `target` 
+- [ ] Запуск приложения
+### Then
+- [ ] Проект успешно собирается
+- [ ] вывод `Hello world!`
+- [ ] Ментор принимает PR в `master`
 
 public class MyApplication {
 	public static void main(String[] args) {
