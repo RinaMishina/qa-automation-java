@@ -1,10 +1,15 @@
 package com.tinkoff.edu.test;
 
-import com.tinkoff.edu.app.LoanCalcController;
+import com.tinkoff.edu.app.*;
 
 public class LoanCalcTest {
     public static void main(String... args) {
-        int requestId = LoanCalcController.createRequest();
-        System.out.println("actual result: " + requestId + "; expected result: 1");
+        LoanCalcRepository repository = new LoanCalcRepository();
+        LoanCalcService service = new LoanCalcService(repository);
+        LoanCalcController controller = new LoanCalcController(service);
+        LoanRequest request = new LoanRequest(LoanType.IP, 10,1000);
+        LoanResponse response = controller.createRequest(request);
+
+        System.out.println(response);
     }
 }
