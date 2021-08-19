@@ -1,7 +1,6 @@
 package com.tinkoff.edu.app;
 
 public class LoanCalcController {
-
     private final LoanCalcService loanCalcService;
 
     public LoanCalcController(LoanCalcService loanCalcService) {

@@ -1,7 +1,6 @@
 package com.tinkoff.edu.app;
 
 public class LoanResponse {
-
     private final int id;
     private final ResponseType type;
     private final LoanRequest request;
@@ -14,6 +13,6 @@ public class LoanResponse {
 
     public String toString() {
         return "{id: "
-                + this.id + ", type: " + this.type + " ,request: " + this.request.toString() + "}";
+                + this.id + ", type: " + this.type + ", " + this.request.toString() + "}";
     }
 }
