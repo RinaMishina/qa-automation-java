@@ -1,11 +1,14 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.loan.models;
+
+import com.tinkoff.edu.app.loan.models.LoanData;
+import com.tinkoff.edu.app.loan.types.ResponseType;
 
 public class LoanResponse {
     private final int id;
     private final ResponseType type;
-    private final LoanRequest request;
+    private final LoanData request;
 
-    public LoanResponse(int id, ResponseType type, LoanRequest request) {
+    public LoanResponse(int id, ResponseType type, LoanData request) {
         this.id = id;
         this.type = type;
         this.request = request;

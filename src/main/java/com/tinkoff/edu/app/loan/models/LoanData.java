@@ -1,15 +1,13 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.loan.models;
 
-public class LoanRequest {
-    public LoanType getType() {
-        return type;
-    }
+import com.tinkoff.edu.app.loan.types.LoanType;
 
+public class LoanData {
     private final LoanType type;
     private final int months;
     private final int amount;
 
-    public LoanRequest(LoanType type, int months, int amount) {
+    public LoanData(LoanType type, int months, int amount) {
         this.type = type;
         this.months = months;
         this.amount = amount;
@@ -22,6 +20,11 @@ public class LoanRequest {
     public int getAmount() {
         return amount;
     }
+
+    public LoanType getType() {
+        return type;
+    }
+
 
     public String toString() {
         return "request: {"
