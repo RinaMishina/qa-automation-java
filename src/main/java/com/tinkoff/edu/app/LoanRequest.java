@@ -1,6 +1,10 @@
 package com.tinkoff.edu.app;
 
 public class LoanRequest {
+    public LoanType getType() {
+        return type;
+    }
+
     private final LoanType type;
     private final int months;
     private final int amount;

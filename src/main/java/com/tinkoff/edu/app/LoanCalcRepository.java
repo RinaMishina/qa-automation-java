@@ -1,6 +1,6 @@
 package com.tinkoff.edu.app;
 
-public class LoanCalcRepository {
+public class LoanCalcRepository implements ILoanCalcRepository {
     private int requestId;
 
     public int save() {
