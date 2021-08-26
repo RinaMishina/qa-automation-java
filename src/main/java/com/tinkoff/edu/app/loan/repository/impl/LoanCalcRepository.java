@@ -8,4 +8,13 @@ public class LoanCalcRepository implements ILoanCalcRepository {
     public int save() {
         return ++requestId;
     }
+
+    public int getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
 }

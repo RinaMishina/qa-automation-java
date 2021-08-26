@@ -14,6 +14,10 @@ public class LoanResponse {
         this.request = request;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String toString() {
         return "{id: "
                 + this.id + ", type: " + this.type + ", " + this.request.toString() + "}";
