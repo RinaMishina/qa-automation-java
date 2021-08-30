@@ -26,18 +26,6 @@ public class LoanCalcService implements ILoanCalcService {
            return ResponseType.APPROVED;
        }
 
-       if (loanData.getType().equals(LoanType.PERSON) & loanData.getMonth() > 12 & loanData.getAmount() > 10_000) {
-           return ResponseType.DECLINED;
-       }
-
-       if (loanData.getType().equals(LoanType.OOO) & loanData.getAmount() <= 10_000) {
-           return ResponseType.DECLINED;
-       }
-
-       if (loanData.getType().equals(LoanType.OOO) & loanData.getAmount() > 10_000 & loanData.getMonth() >= 12) {
-           return ResponseType.DECLINED;
-       }
-
        if (loanData.getType().equals(LoanType.OOO) & loanData.getAmount() > 10_000 & loanData.getMonth() < 12) {
            return ResponseType.APPROVED;
        }
