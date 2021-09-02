@@ -3,16 +3,18 @@ package com.tinkoff.edu.app.loan.models;
 import com.tinkoff.edu.app.loan.models.LoanData;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 
+import java.util.UUID;
+
 public class LoanResponse {
-    private final int id;
+    private final UUID id;
     private final ResponseType type;
 
-    public LoanResponse(int id, ResponseType type) {
+    public LoanResponse(UUID id, ResponseType type) {
         this.id = id;
         this.type = type;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 

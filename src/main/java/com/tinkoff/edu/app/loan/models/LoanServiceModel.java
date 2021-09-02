@@ -2,16 +2,20 @@ package com.tinkoff.edu.app.loan.models;
 
 import com.tinkoff.edu.app.loan.types.ResponseType;
 
-public class LoanServiceModel {
-    private final int id;
-    private final ResponseType type;
+import java.util.UUID;
 
-    public LoanServiceModel(int id, ResponseType type) {
+public class LoanServiceModel {
+    private final UUID id;
+    private ResponseType type;
+    private final String fio;
+
+    public LoanServiceModel(UUID id, ResponseType type, String fio) {
         this.id = id;
         this.type = type;
+        this.fio = fio;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -19,4 +23,11 @@ public class LoanServiceModel {
         return type;
     }
 
+    public String getFio() {
+        return fio;
+    }
+
+    public void setType(ResponseType type) {
+        this.type = type;
+    }
 }

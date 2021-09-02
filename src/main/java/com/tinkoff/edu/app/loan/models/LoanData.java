@@ -6,11 +6,13 @@ public class LoanData {
     private final LoanType type;
     private final int months;
     private final int amount;
+    private final String fio;
 
-    public LoanData(LoanType type, int months, int amount) {
+    public LoanData(LoanType type, int months, int amount, String fio) {
         this.type = type;
         this.months = months;
         this.amount = amount;
+        this.fio = fio;
     }
 
     public int getMonth() {
@@ -25,12 +27,8 @@ public class LoanData {
         return type;
     }
 
-
-    public String toString() {
-        return "request: {"
-                + this.type + ", "
-                + this.getAmount()
-                + " for " + this.getMonth()
-                + " months}";
+    public String getFio() {
+        return fio;
     }
+
 }
