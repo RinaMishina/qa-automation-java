@@ -20,7 +20,7 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
 
     @Override
     public LoanServiceModel save(LoanData loanData, ResponseType responseType) {
-        if (this.currentIndex+1 >= this.length) {
+        if (this.currentIndex + 1 >= this.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
 
@@ -30,7 +30,7 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
                 loanData.getFio()
         );
 
-        this.loanDataStorage[++this.currentIndex] = loanServiceModel;
+        this.loanDataStorage[++ this.currentIndex] = loanServiceModel;
 
         return loanServiceModel;
     }
@@ -40,7 +40,7 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
             return null;
         }
 
-        for (int i = 0; i <= currentIndex; i++ ) {
+        for (int i = 0; i <= currentIndex; i ++ ) {
             if (this.loanDataStorage[i].getId() == id) {
                 return this.loanDataStorage[i];
             }

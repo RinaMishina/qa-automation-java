@@ -16,7 +16,8 @@ public class LoanCalcService implements ILoanCalcService {
         this.loanCalcRepository = loanCalcRepository;
     }
 
-    public LoanServiceModel createRequest(LoanData loanData) {
+    public LoanServiceModel createRequest(LoanData loanData) throws AmountException {
+        this.verifyLoanData(loanData);
         ResponseType type = this.getType(loanData);
 
         try {
@@ -24,6 +25,36 @@ public class LoanCalcService implements ILoanCalcService {
         } catch (ArrayIndexOutOfBoundsException ex) {
             return null;
         }
+    }
+
+    private void verifyLoanData(LoanData loanData) throws AmountException {
+        if (loanData == null) {
+            throw new IllegalArgumentException("request is empty");
+        }
+
+        if (loanData.getMonth() <= 0 || loanData.getMonth() >= 100) {
+            throw new IllegalArgumentException("months in request are invalid");
+        }
+
+        if (loanData.getAmount() <= 0 || loanData.getAmount() > 1_000_000) {
+            throw new AmountException("amount in request is invalid");
+        }
+
+        if (loanData.getFio() == null) {
+            throw new IllegalArgumentException("fio is empty");
+        }
+
+        if (loanData.getFio().length() < 10 || loanData.getFio().length() > 100) {
+            throw new IllegalArgumentException("fio not in length range");
+        }
+
+        if (!this.isFioSymbolsValid(loanData.getFio())) {
+            throw new IllegalArgumentException("fio contains prohibited symbols");
+        }
+    }
+
+    private boolean isFioSymbolsValid(String fio) {
+        return fio.matches("[ а-яА-Я-]+");
     }
 
     public LoanServiceModel getLoanModelById(UUID id) {

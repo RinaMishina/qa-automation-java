@@ -29,7 +29,7 @@ public class AppTest {
         repository = new ArrayLoanCalcRepository(length);
         service = new LoanCalcService(repository);
         controller = new LoanCalcController(service);
-        String fio = "Иванов Иван Иваныч";
+        this.fio = "Иванов Иван Иваныч";
 
     }
 
@@ -208,6 +208,60 @@ public class AppTest {
         LoanResponse response2 = controller.createRequest(request2);
         assertNull(response2.getId());
         assertEquals(ResponseType.DECLINED, response2.getType());
+    }
+
+    @Test
+    @DisplayName ("должен вернуться статус заявки declined и id null, если fio пусто")
+    public void shouldGetResponseTypeWithIdNullIfFioIsEmpty() {
+        request = new LoanData(LoanType.PERSON, 2, 100, null);
+        LoanResponse response = controller.createRequest(request);
+        assertNull(response.getId());
+        assertEquals(ResponseType.DECLINED, response.getType());
+    }
+
+    @Test
+    @DisplayName ("должен вернуться статус заявки declined и id null, если fio короткое")
+    public void shouldGetResponseTypeWithIdNullIfFioIsTooShort() {
+        request = new LoanData(LoanType.PERSON, 2, 100, "тест");
+        LoanResponse response = controller.createRequest(request);
+        assertNull(response.getId());
+        assertEquals(ResponseType.DECLINED, response.getType());
+    }
+
+    @Test
+    @DisplayName ("должен вернуться статус заявки declined и id null, если fio длинное")
+    public void shouldGetResponseTypeWithIdNullIfFioIsTooLong() {
+        request = new LoanData(LoanType.PERSON, 2, 100, "аотулоы ваолмты амаама амамуаццуацу уцацуцуауац цацуацуаам вдмтыдвл мдлывтмдлфвтмдлыв амлоытвмдыотвмол");
+        LoanResponse response = controller.createRequest(request);
+        assertNull(response.getId());
+        assertEquals(ResponseType.DECLINED, response.getType());
+    }
+
+    @Test
+    @DisplayName ("должен вернуться статус заявки declined и id null, если fio с запрещенными символами")
+    public void shouldGetResponseTypeWithIdNullIfFioIsContainsProhibitedSymbols() {
+        request = new LoanData(LoanType.PERSON, 2, 100, "123_123_123_123");
+        LoanResponse response = controller.createRequest(request);
+        assertNull(response.getId());
+        assertEquals(ResponseType.DECLINED, response.getType());
+    }
+
+    @Test
+    @DisplayName ("должен вернуться статус заявки declined и id null, если месяцев больше 100")
+    public void shouldGetResponseTypeWithIdNullIfMonthsMoreThan100() {
+        request = new LoanData(LoanType.PERSON, 101, 100, fio);
+        LoanResponse response = controller.createRequest(request);
+        assertNull(response.getId());
+        assertEquals(ResponseType.DECLINED, response.getType());
+    }
+
+    @Test
+    @DisplayName ("должен вернуться статус заявки declined и id null, если сумма больше 1_000_000")
+    public void shouldGetResponseTypeWithIdNullIfMAnountMoreThan1000000() {
+        request = new LoanData(LoanType.PERSON, 2, 1000001, fio);
+        LoanResponse response = controller.createRequest(request);
+        assertNull(response.getId());
+        assertEquals(ResponseType.DECLINED, response.getType());
     }
 
 
