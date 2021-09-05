@@ -48,13 +48,9 @@ public class LoanCalcService implements ILoanCalcService {
             throw new IllegalArgumentException("fio not in length range");
         }
 
-        if (!this.isFioSymbolsValid(loanData.getFio())) {
+        if (! loanData.getFio().matches("[ а-яА-Я-]+")) {
             throw new IllegalArgumentException("fio contains prohibited symbols");
         }
-    }
-
-    private boolean isFioSymbolsValid(String fio) {
-        return fio.matches("[ а-яА-Я-]+");
     }
 
     public LoanServiceModel getLoanModelById(UUID id) {

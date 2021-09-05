@@ -30,7 +30,7 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
                 loanData.getFio()
         );
 
-        this.loanDataStorage[++ this.currentIndex] = loanServiceModel;
+        this.loanDataStorage[++this.currentIndex] = loanServiceModel;
 
         return loanServiceModel;
     }
@@ -40,7 +40,7 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
             return null;
         }
 
-        for (int i = 0; i <= currentIndex; i ++ ) {
+        for (int i = 0; i <= currentIndex; i++ ) {
             if (this.loanDataStorage[i].getId() == id) {
                 return this.loanDataStorage[i];
             }
