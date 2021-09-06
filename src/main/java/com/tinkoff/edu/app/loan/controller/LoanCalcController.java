@@ -4,6 +4,7 @@ import com.tinkoff.edu.app.loan.service.ILoanCalcService;
 import com.tinkoff.edu.app.loan.models.LoanServiceModel;
 import com.tinkoff.edu.app.loan.models.LoanData;
 import com.tinkoff.edu.app.loan.models.LoanResponse;
+import com.tinkoff.edu.app.loan.service.impl.AmountException;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 
 import java.util.UUID;
@@ -16,25 +17,13 @@ public class LoanCalcController {
     }
 
     public LoanResponse createRequest(LoanData request) {
-        if (request == null) {
+        try {
+            LoanServiceModel model = this.loanCalcService.createRequest(request);
+
+            return new LoanResponse(model.getId(), model.getType());
+        } catch (Exception message) {
             return new LoanResponse(null, ResponseType.DECLINED);
         }
-
-        if (request.getMonth() <= 0) {
-            return new LoanResponse(null, ResponseType.DECLINED);
-        }
-
-        if (request.getAmount() <= 0) {
-            return new LoanResponse(null, ResponseType.DECLINED);
-        }
-
-        LoanServiceModel model = this.loanCalcService.createRequest(request);
-
-        if (model == null) {
-            return new LoanResponse(null, ResponseType.DECLINED);
-        }
-
-        return new LoanResponse(model.getId(), model.getType());
     }
 
     public LoanResponse getById(UUID id) {

@@ -20,7 +20,7 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
 
     @Override
     public LoanServiceModel save(LoanData loanData, ResponseType responseType) {
-        if (this.currentIndex+1 >= this.length) {
+        if (this.currentIndex + 1 >= this.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
 
