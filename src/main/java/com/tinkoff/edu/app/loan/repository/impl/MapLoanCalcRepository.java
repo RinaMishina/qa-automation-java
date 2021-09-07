@@ -7,52 +7,42 @@ import com.tinkoff.edu.app.loan.types.LoanType;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ArrayLoanCalcRepository implements ILoanCalcRepository {
-    private LoanServiceModel[] loanDataStorage;
-    private int currentIndex = -1;
-    private int length;
+public class MapLoanCalcRepository implements ILoanCalcRepository {
+    private HashMap<UUID, LoanServiceModel> mapStorage;
 
-
-    public ArrayLoanCalcRepository(int length) {
-        this.loanDataStorage = new LoanServiceModel[length];
-        this.length = length;
+    public MapLoanCalcRepository() {
+        this.mapStorage = new HashMap<>();
     }
+
 
     @Override
     public LoanServiceModel save(LoanData loanData, ResponseType responseType) {
-        if (this.currentIndex + 1 >= this.length) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
-
         LoanServiceModel loanServiceModel = new LoanServiceModel(
                 UUID.randomUUID(),
                 responseType,
                 loanData.getFio(),
                 loanData.getType()
         );
-
-        this.loanDataStorage[++this.currentIndex] = loanServiceModel;
+        mapStorage.put(loanServiceModel.getId(), loanServiceModel);
 
         return loanServiceModel;
     }
 
+    @Override
     public LoanServiceModel getById(UUID id) {
-        if (currentIndex < 0) {
+        if (mapStorage.isEmpty()) {
             return null;
         }
-
-        for (int i = 0; i <= currentIndex; i++ ) {
-            if (this.loanDataStorage[i].getId() == id) {
-                return this.loanDataStorage[i];
-            }
-        }
-
-        return null;
+        return mapStorage.get(id);
     }
 
+    @Override
     public LoanServiceModel updateType(UUID id, ResponseType type) {
         LoanServiceModel model = this.getById(id);
 
@@ -63,23 +53,19 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
         model.setType(type);
 
         return model;
+
     }
 
-    @Override
     public List<LoanServiceModel> getAllByLoanType(LoanType loanType) {
-
-        if (currentIndex < 0) {
+        if (mapStorage.isEmpty()) {
             return new ArrayList<>();
         }
 
-        List<LoanServiceModel> l = new ArrayList<>();
+        List<LoanServiceModel> list = mapStorage.values()
+                .stream()
+                .filter(model -> model.getLoanType() == loanType)
+                .collect(Collectors.toList());
 
-        for (int i = 0; i <= currentIndex; i++ ) {
-            if (this.loanDataStorage[i].getLoanType() == loanType) {
-                l.add(loanDataStorage[i]);
-            }
-        }
-
-        return l;
+        return list;
     }
 }

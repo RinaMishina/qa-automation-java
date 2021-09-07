@@ -1,6 +1,5 @@
 package com.tinkoff.edu.app.loan.models;
 
-import com.tinkoff.edu.app.loan.models.LoanData;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 
 import java.util.UUID;

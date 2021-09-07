@@ -7,6 +7,7 @@ import com.tinkoff.edu.app.loan.types.LoanType;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 import com.tinkoff.edu.app.loan.service.ILoanCalcService;
 
+import java.util.List;
 import java.util.UUID;
 
 public class LoanCalcService implements ILoanCalcService {
@@ -59,6 +60,10 @@ public class LoanCalcService implements ILoanCalcService {
 
     public LoanServiceModel updateTypeById(UUID id, ResponseType type) {
         return this.loanCalcRepository.updateType(id, type);
+    }
+
+    public List<LoanServiceModel> getAllByLoanType(LoanType loanType) {
+        return this.loanCalcRepository.getAllByLoanType(loanType);
     }
 
     private ResponseType getType(LoanData loanData) {

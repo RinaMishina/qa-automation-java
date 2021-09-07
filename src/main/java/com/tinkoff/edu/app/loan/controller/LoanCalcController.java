@@ -5,8 +5,11 @@ import com.tinkoff.edu.app.loan.models.LoanServiceModel;
 import com.tinkoff.edu.app.loan.models.LoanData;
 import com.tinkoff.edu.app.loan.models.LoanResponse;
 import com.tinkoff.edu.app.loan.service.impl.AmountException;
+import com.tinkoff.edu.app.loan.types.LoanType;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class LoanCalcController {
@@ -44,5 +47,21 @@ public class LoanCalcController {
         }
 
         return new LoanResponse(model.getId(), model.getType());
+    }
+
+    public List<LoanResponse> getAllByLoanType (LoanType loanType) {
+        List<LoanServiceModel> loanServiceModelList = this.loanCalcService.getAllByLoanType(loanType);
+
+        List<LoanResponse> responseList = new ArrayList<>();
+
+        if (loanServiceModelList.isEmpty()) {
+            return responseList;
+        }
+
+        for (LoanServiceModel model : loanServiceModelList) {
+            responseList.add(new LoanResponse(model.getId(), model.getType()));
+        }
+
+        return responseList;
     }
 }
