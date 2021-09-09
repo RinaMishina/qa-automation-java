@@ -49,7 +49,7 @@ public class LoanCalcService implements ILoanCalcService {
             throw new IllegalArgumentException("fio not in length range");
         }
 
-        if (! loanData.getFio().matches("[ а-яА-Я-]+")) {
+        if (!loanData.getFio().matches("[ а-яА-Я-]+")) {
             throw new IllegalArgumentException("fio contains prohibited symbols");
         }
     }
@@ -67,16 +67,16 @@ public class LoanCalcService implements ILoanCalcService {
     }
 
     private ResponseType getType(LoanData loanData) {
-       switch (loanData.getType()) {
-           case IP:
-               return getIpStatus();
-           case OOO:
-               return getOooStatus(loanData);
-           case PERSON:
-               return getPersonStatus(loanData);
-           default:
-               return ResponseType.DECLINED;
-       }
+        switch (loanData.getType()) {
+            case IP:
+                return getIpStatus();
+            case OOO:
+                return getOooStatus(loanData);
+            case PERSON:
+                return getPersonStatus(loanData);
+            default:
+                return ResponseType.DECLINED;
+        }
     }
 
     private ResponseType getPersonStatus(LoanData loanData) {

@@ -11,7 +11,10 @@ import java.util.UUID;
 
 public interface ILoanCalcService {
     LoanServiceModel createRequest(LoanData loanData) throws AmountException;
+
     LoanServiceModel getLoanModelById(UUID id);
+
     LoanServiceModel updateTypeById(UUID id, ResponseType type);
+
     List<LoanServiceModel> getAllByLoanType(LoanType loanType);
 }

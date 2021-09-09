@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class ArrayLoanCalcRepository implements ILoanCalcRepository {
-    private LoanServiceModel[] loanDataStorage;
+    private final LoanServiceModel[] loanDataStorage;
     private int currentIndex = -1;
-    private int length;
+    private final int length;
 
 
     public ArrayLoanCalcRepository(int length) {
@@ -44,7 +44,7 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
             return null;
         }
 
-        for (int i = 0; i <= currentIndex; i++ ) {
+        for (int i = 0; i <= currentIndex; i++) {
             if (this.loanDataStorage[i].getId() == id) {
                 return this.loanDataStorage[i];
             }
@@ -72,14 +72,14 @@ public class ArrayLoanCalcRepository implements ILoanCalcRepository {
             return new ArrayList<>();
         }
 
-        List<LoanServiceModel> l = new ArrayList<>();
+        List<LoanServiceModel> loanServiceModelList = new ArrayList<>();
 
-        for (int i = 0; i <= currentIndex; i++ ) {
+        for (int i = 0; i <= currentIndex; i++) {
             if (this.loanDataStorage[i].getLoanType() == loanType) {
-                l.add(loanDataStorage[i]);
+                loanServiceModelList.add(loanDataStorage[i]);
             }
         }
 
-        return l;
+        return loanServiceModelList;
     }
 }

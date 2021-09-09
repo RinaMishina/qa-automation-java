@@ -10,7 +10,10 @@ import java.util.UUID;
 
 public interface ILoanCalcRepository {
     LoanServiceModel save(LoanData loanData, ResponseType responseType);
+
     LoanServiceModel getById(UUID id);
+
     LoanServiceModel updateType(UUID id, ResponseType type);
+
     List<LoanServiceModel> getAllByLoanType(LoanType loanType);
 }

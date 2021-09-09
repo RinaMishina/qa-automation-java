@@ -49,14 +49,10 @@ public class LoanCalcController {
         return new LoanResponse(model.getId(), model.getType());
     }
 
-    public List<LoanResponse> getAllByLoanType (LoanType loanType) {
+    public List<LoanResponse> getAllByLoanType(LoanType loanType) {
         List<LoanServiceModel> loanServiceModelList = this.loanCalcService.getAllByLoanType(loanType);
 
         List<LoanResponse> responseList = new ArrayList<>();
-
-        if (loanServiceModelList.isEmpty()) {
-            return responseList;
-        }
 
         for (LoanServiceModel model : loanServiceModelList) {
             responseList.add(new LoanResponse(model.getId(), model.getType()));
