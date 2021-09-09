@@ -7,6 +7,7 @@ import com.tinkoff.edu.app.loan.types.LoanType;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 import com.tinkoff.edu.app.loan.service.ILoanCalcService;
 
+import java.util.List;
 import java.util.UUID;
 
 public class LoanCalcService implements ILoanCalcService {
@@ -48,7 +49,7 @@ public class LoanCalcService implements ILoanCalcService {
             throw new IllegalArgumentException("fio not in length range");
         }
 
-        if (! loanData.getFio().matches("[ а-яА-Я-]+")) {
+        if (!loanData.getFio().matches("[ а-яА-Я-]+")) {
             throw new IllegalArgumentException("fio contains prohibited symbols");
         }
     }
@@ -61,17 +62,21 @@ public class LoanCalcService implements ILoanCalcService {
         return this.loanCalcRepository.updateType(id, type);
     }
 
+    public List<LoanServiceModel> getAllByLoanType(LoanType loanType) {
+        return this.loanCalcRepository.getAllByLoanType(loanType);
+    }
+
     private ResponseType getType(LoanData loanData) {
-       switch (loanData.getType()) {
-           case IP:
-               return getIpStatus();
-           case OOO:
-               return getOooStatus(loanData);
-           case PERSON:
-               return getPersonStatus(loanData);
-           default:
-               return ResponseType.DECLINED;
-       }
+        switch (loanData.getType()) {
+            case IP:
+                return getIpStatus();
+            case OOO:
+                return getOooStatus(loanData);
+            case PERSON:
+                return getPersonStatus(loanData);
+            default:
+                return ResponseType.DECLINED;
+        }
     }
 
     private ResponseType getPersonStatus(LoanData loanData) {

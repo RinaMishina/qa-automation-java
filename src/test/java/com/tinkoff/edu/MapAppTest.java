@@ -3,7 +3,7 @@ package com.tinkoff.edu;
 import com.tinkoff.edu.app.loan.controller.LoanCalcController;
 import com.tinkoff.edu.app.loan.models.LoanData;
 import com.tinkoff.edu.app.loan.models.LoanResponse;
-import com.tinkoff.edu.app.loan.repository.impl.ArrayLoanCalcRepository;
+import com.tinkoff.edu.app.loan.repository.impl.MapLoanCalcRepository;
 import com.tinkoff.edu.app.loan.service.impl.LoanCalcService;
 import com.tinkoff.edu.app.loan.types.LoanType;
 import com.tinkoff.edu.app.loan.types.ResponseType;
@@ -11,18 +11,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AppTest {
-    private ArrayLoanCalcRepository arrayRepository;
+public class MapAppTest {
+    private MapLoanCalcRepository mapRepository;
     private LoanCalcService service;
     private LoanCalcController controller;
     private LoanData request;
@@ -30,9 +29,8 @@ public class AppTest {
 
     @BeforeEach
     public void init() {
-        int length = 1;
-        arrayRepository = new ArrayLoanCalcRepository(length);
-        service = new LoanCalcService(arrayRepository);
+        mapRepository = new MapLoanCalcRepository();
+        service = new LoanCalcService(mapRepository);
         controller = new LoanCalcController(service);
         this.fio = "Иванов Иван Иваныч";
 
@@ -205,17 +203,6 @@ public class AppTest {
     }
 
     @Test
-    @DisplayName("должен  вернуться статус заявки declined и id null, когда массив уже заполнен")
-    public void shouldGetResponseTypeNullThenRepositoryIsFull() {
-        request = new LoanData(LoanType.IP, 1, 1, fio);
-        LoanResponse response1 = controller.createRequest(request);
-        LoanData request2 = new LoanData(LoanType.PERSON, 3, 2345, fio);
-        LoanResponse response2 = controller.createRequest(request2);
-        assertNull(response2.getId());
-        assertEquals(ResponseType.DECLINED, response2.getType());
-    }
-
-    @Test
     @DisplayName("должен вернуться статус заявки declined и id null, если fio пусто")
     public void shouldGetResponseTypeWithIdNullIfFioIsEmpty() {
         request = new LoanData(LoanType.PERSON, 2, 100, null);
@@ -273,23 +260,35 @@ public class AppTest {
     @DisplayName("должны вернуться все ооо из репо")
     public void shouldGetAllByLoanType() {
         request = new LoanData(LoanType.OOO, 9, 10001, fio);
-        LoanResponse response = controller.createRequest(request);
+        LoanResponse response1 = controller.createRequest(request);
+        request = new LoanData(LoanType.PERSON, 2, 1000001, fio);
+        LoanResponse response2 = controller.createRequest(request);
+        request = new LoanData(LoanType.OOO, 12, 10001, fio);
+        LoanResponse response3 = controller.createRequest(request);
 
         List<LoanResponse> testResponseList = new ArrayList<>();
-        testResponseList.add(response);
+        testResponseList.add(response1);
+        testResponseList.add(response3);
+        System.out.println(testResponseList);
+        System.out.println(controller.getAllByLoanType(LoanType.OOO));
 
         assertThat(controller.getAllByLoanType(LoanType.OOO), containsInAnyOrder(
-                hasProperty("id", is(response.getId()))
+                hasProperty("id", is(response1.getId())),
+                hasProperty("id", is(response3.getId()))
         ));
     }
 
     @Test
-    @DisplayName("не должно вернуться все person из репо, где нет person")
+    @DisplayName("не должно вернуться все ip, где нет ip")
     public void shouldGetEmptyAllByLoanTypeWhenLoanTypeNotExists() {
         request = new LoanData(LoanType.OOO, 9, 10001, fio);
-        LoanResponse response = controller.createRequest(request);
+        LoanResponse response1 = controller.createRequest(request);
+        request = new LoanData(LoanType.PERSON, 12, 10000, fio);
+        LoanResponse response2 = controller.createRequest(request);
+        request = new LoanData(LoanType.OOO, 12, 10001, fio);
+        LoanResponse response3 = controller.createRequest(request);
 
-        assertThat(controller.getAllByLoanType(LoanType.PERSON).isEmpty(), is(true));
+        assertThat(controller.getAllByLoanType(LoanType.IP).isEmpty(), is(true));
     }
 
     @Test
