@@ -7,6 +7,7 @@ import com.tinkoff.edu.app.loan.types.LoanType;
 import com.tinkoff.edu.app.loan.types.ResponseType;
 import com.tinkoff.edu.app.loan.service.ILoanCalcService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class LoanCalcService implements ILoanCalcService {
 
         try {
             return this.loanCalcRepository.save(loanData, type);
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException | IOException ex) {
             return null;
         }
     }
